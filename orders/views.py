@@ -19,7 +19,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Order.objects.filter(user_id=self.request.user)
+        return Order.objects.filter(customer=self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user)
+        serializer.save(customer=self.request.user)
