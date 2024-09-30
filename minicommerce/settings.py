@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = environ.get('DEBUG') == 'True'
+DEBUG = environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '').split(',')
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mozilla_django_oidc',
     'rest_framework',
     'orders',
     'users',
@@ -54,7 +55,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh'
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+
+)
 
 ROOT_URLCONF = 'minicommerce.urls'
 
@@ -134,5 +142,30 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
+
+# LOGGING = {
+#     'loggers': {
+#         'mozilla_django_oidc': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG'
+#         },
+#     }
+# }
+
+OIDC_RP_SIGN_ALGO = 'RS256'
+OIDC_OP_JWKS_ENDPOINT = environ['OIDC_OP_JWKS_ENDPOINT']
+OIDC_DRF_AUTH_BACKEND = 'mozilla_django_oidc.auth.OIDCAuthenticationBackend'
+OIDC_RP_CLIENT_ID = environ['OIDC_RP_CLIENT_ID']
+OIDC_RP_CLIENT_SECRET = environ['OIDC_RP_CLIENT_SECRET']
+OIDC_OP_AUTHORIZATION_ENDPOINT = environ['OIDC_OP_AUTHORIZATION_ENDPOINT']
+OIDC_OP_TOKEN_ENDPOINT = environ['OIDC_OP_TOKEN_ENDPOINT']
+OIDC_OP_USER_ENDPOINT = environ['OIDC_OP_USER_ENDPOINT']
+LOGIN_REDIRECT_URL = "/api/orders/"
+LOGOUT_REDIRECT_URL = "/users/login_error/"
+LOGIN_REDIRECT_URL_FAILURE = "/users/login_error/"
