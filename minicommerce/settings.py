@@ -166,8 +166,8 @@ OIDC_OP_AUTHORIZATION_ENDPOINT = environ['OIDC_OP_AUTHORIZATION_ENDPOINT']
 OIDC_OP_TOKEN_ENDPOINT = environ['OIDC_OP_TOKEN_ENDPOINT']
 OIDC_OP_USER_ENDPOINT = environ['OIDC_OP_USER_ENDPOINT']
 LOGIN_REDIRECT_URL = "/api/orders/"
-LOGOUT_REDIRECT_URL = "/users/login_error/"
-LOGIN_REDIRECT_URL_FAILURE = "/users/login_error/"
+LOGOUT_REDIRECT_URL = "/api/orders/"
+LOGIN_REDIRECT_URL_FAILURE = "/api/orders/"
 
 # Africastalking SMS
 AT_USERNAME = environ['AT_USERNAME']   # username in Africastalking app
