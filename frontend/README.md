@@ -1,40 +1,8 @@
-# Mini Commerce Frontend
+# React + Vite
 
-This is the frontend for the Mini Commerce application, a single-page application (SPA) built using React.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Table of Contents
+Currently, two official plugins are available:
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Installation
-
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/mini-commerce.git
-    ```
-2. Navigate to the frontend directory:
-    ```sh
-    cd mini-commerce/frontend
-    ```
-3. Install the dependencies:
-    ```sh
-    npm install
-    ```
-
-## Usage
-
-1. Start the development server:
-    ```sh
-    npm start
-    ```
-2. Open your browser and navigate to `http://localhost:3000`.
-
-## Features
-
-- User authentication
-- Order management
-
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
