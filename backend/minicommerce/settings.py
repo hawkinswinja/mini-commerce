@@ -50,12 +50,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'mozilla_django_oidc.middleware.SessionRefresh'
+    'mozilla_django_oidc.middleware.SessionRefresh',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -148,14 +149,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# LOGGING = {
-#     'loggers': {
-#         'mozilla_django_oidc': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG'
-#         },
-#     }
-# }
 
 OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_OP_JWKS_ENDPOINT = environ['OIDC_OP_JWKS_ENDPOINT']
@@ -172,3 +165,11 @@ LOGIN_REDIRECT_URL_FAILURE = "/api/orders/"
 # Africastalking SMS
 AT_USERNAME = environ['AT_USERNAME']   # username in Africastalking app
 AT_APIKEY = environ['AT_APIKEY']  # APIKEY
+
+# CORS
+# CORS_ALLOW_ALL_ORIGINS = DEBUG
+CORS_ALLOWED_ORIGINS = environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+# SESSION_COOKIE_SAMESITE = 'None'
+# # Set secure cookies only if not in debug mode (i.e., in production)
+# SESSION_COOKIE_SECURE = not DEBUG
+# CSRF_COOKIE_SECURE = not DEBUG
