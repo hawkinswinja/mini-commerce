@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import PrivateRoute from './components/PrivateRoute';
 import LoginPage from './pages/LoginPage';
 import OrdersPage from './pages/OrdersPage';
 import ProductsPage from './pages/ProductsPage';
@@ -10,8 +11,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/products" element={<Layout><ProductsPage /></Layout>} />
-        <Route path="/orders" element={<Layout><OrdersPage /></Layout>} />
+        <Route path="/products"  element={<PrivateRoute element={<Layout><ProductsPage /></Layout>} />} />
+        <Route path="/orders"  element={<PrivateRoute element={<Layout><OrdersPage /></Layout>} />} />
       </Routes>
     </Router>
   );

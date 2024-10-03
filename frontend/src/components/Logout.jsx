@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 
 export const logout = async (navigate) => {
   try {
@@ -24,3 +23,4 @@ export const logout = async (navigate) => {
     console.error('Logout failed:', error);
   }
 };
+//     }

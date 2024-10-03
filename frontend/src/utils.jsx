@@ -1,3 +1,4 @@
+import axios from 'axios';
 const products = [
     { id: 1, name: 'Product 1', stock: 10, price: 20 },
     { id: 2, name: 'Product 2', stock: 5, price: 35 },
@@ -22,4 +23,4 @@ const setCookie = (name, value, days = 7) => {
   document.cookie = `${name}=${value || ''}${expires}; path=/`;
 };
 
-export { getCookie, setCookie, products };
+export { getCookie, setCookie, products};
