@@ -5,7 +5,7 @@ from mozilla_django_oidc.views import OIDCAuthenticationCallbackView, OIDCAuthen
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('orders/', include('orders.urls')),
-    path('users/', include('users.urls')),
+    path('user/', include('users.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('oidc/', include('mozilla_django_oidc.urls')),
 ]
