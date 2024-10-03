@@ -1,5 +1,6 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from django.middleware.csrf import get_token
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 from rest_framework.permissions import AllowAny
@@ -8,8 +9,11 @@ from rest_framework.response import Response
 from .serializers import LoginSerializer
 
 
-csrf_exempt_method = method_decorator(csrf_exempt)
+csrf_protect_method = method_decorator(csrf_protect)
 
+@ensure_csrf_cookie
+def get_csrf(request):
+    return JsonResponse({'csrftoken': get_token(request)})
 
 def check_authentication(request):
     print(request.user.is_authenticated)
@@ -20,7 +24,7 @@ def check_authentication(request):
 class LoginView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = ()
-    @csrf_exempt_method
+    @csrf_protect_method
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

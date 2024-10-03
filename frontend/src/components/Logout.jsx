@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie } from '../utils';
 import Cookies from 'js-cookie';
 
 export const logout = async (navigate) => {
@@ -6,7 +7,7 @@ export const logout = async (navigate) => {
     // Make POST request to logout endpoint
     const response = await axios.post('/api/api-auth/logout/', {}, {
       headers: {
-        'X-CSRFToken': Cookies.get('csrftoken'), // Include CSRF token
+        'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
       },
       withCredentials: true, // Send sessionid with the request
     });

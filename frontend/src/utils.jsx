@@ -1,4 +1,5 @@
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 const products = [
     { id: 1, name: 'Product 1', stock: 10, price: 20 },
     { id: 2, name: 'Product 2', stock: 5, price: 35 },
@@ -23,4 +24,9 @@ const setCookie = (name, value, days = 7) => {
   document.cookie = `${name}=${value || ''}${expires}; path=/`;
 };
 
-export { getCookie, setCookie, products};
+const setCSRF = async () => {
+  const response = await axios.get('/api/user/csrf/');
+  setCookie('csrftoken', response.data.csrftoken);
+};
+
+export { getCookie, setCookie, products, setCSRF};

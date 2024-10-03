@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getCookie, setCSRF } from '../utils';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
@@ -21,7 +22,13 @@ const LoginPage = () => {
     try {
       const response = await axios.post(
         '/api/user/login/',
-        { username, password }
+        { username, password },
+        {
+          headers:{
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken") || setCSRF(),
+          }
+        }
       );
 
       if (response.status === 201) {
