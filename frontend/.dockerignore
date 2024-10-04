@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+.gitignore
+.env
+*env
+README.md
+node_modules
+dist
+*.config.js
