@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../components/PrivateRoute';
-import { getCookie, setCSRF } from '../utils';
+import { getCookie, setCSRF, useAuth } from '../utils';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
