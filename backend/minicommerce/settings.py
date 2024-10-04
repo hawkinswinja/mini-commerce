@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from os import environ
+from os import getenv as environ
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,12 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = environ.get('SECRET_KEY')
-
+SECRET_KEY = environ('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = environ.get('DEBUG', 'False') == 'True'
+DEBUG = environ('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = environ('ALLOWED_HOSTS', '').split(',')
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,11 +89,11 @@ WSGI_APPLICATION = 'minicommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': environ.get('POSTGRES_DB', 'mydatabase'), 
-        'USER': environ.get('POSTGRES_USER', 'myuser'),  
-        'PASSWORD': environ.get('POSTGRES_PASSWORD', 'mypassword'),
-        'HOST': environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': environ.get('POSTGRES_PORT', '5432'),
+        'NAME': environ('POSTGRES_DB', 'mydatabase'), 
+        'USER': environ('POSTGRES_USER', 'myuser'),  
+        'PASSWORD': environ('POSTGRES_PASSWORD', 'mypassword'),
+        'HOST': environ('POSTGRES_HOST', 'localhost'),
+        'PORT': environ('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -155,21 +154,21 @@ REST_FRAMEWORK = {
 
 
 OIDC_RP_SIGN_ALGO = 'RS256'
-OIDC_OP_JWKS_ENDPOINT = environ['OIDC_OP_JWKS_ENDPOINT']
+OIDC_OP_JWKS_ENDPOINT = environ('OIDC_OP_JWKS_ENDPOINT')
 OIDC_DRF_AUTH_BACKEND = 'mozilla_django_oidc.auth.OIDCAuthenticationBackend'
-OIDC_RP_CLIENT_ID = environ['OIDC_RP_CLIENT_ID']
-OIDC_RP_CLIENT_SECRET = environ['OIDC_RP_CLIENT_SECRET']
-OIDC_OP_AUTHORIZATION_ENDPOINT = environ['OIDC_OP_AUTHORIZATION_ENDPOINT']
-OIDC_OP_TOKEN_ENDPOINT = environ['OIDC_OP_TOKEN_ENDPOINT']
-OIDC_OP_USER_ENDPOINT = environ['OIDC_OP_USER_ENDPOINT']
-LOGIN_REDIRECT_URL = environ.get('LOGIN_REDIRECT_URL', 'http://127.0.0.1:3000/products')
-LOGIN_REDIRECT_URL_FAILURE = environ.get('LOGIN_REDIRECT_URL', 'http://127.0.0.1:3000/products')
+OIDC_RP_CLIENT_ID = environ('OIDC_RP_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = environ('OIDC_RP_CLIENT_SECRET')
+OIDC_OP_AUTHORIZATION_ENDPOINT = environ('OIDC_OP_AUTHORIZATION_ENDPOINT')
+OIDC_OP_TOKEN_ENDPOINT = environ('OIDC_OP_TOKEN_ENDPOINT')
+OIDC_OP_USER_ENDPOINT = environ('OIDC_OP_USER_ENDPOINT')
+LOGIN_REDIRECT_URL = environ('LOGIN_REDIRECT_URL', 'http://127.0.0.1:3000/products')
+LOGIN_REDIRECT_URL_FAILURE = environ('LOGIN_REDIRECT_URL', 'http://127.0.0.1:3000/products')
 
 # Africastalking SMS
-AT_USERNAME = environ['AT_USERNAME']   # username in Africastalking app
-AT_APIKEY = environ['AT_APIKEY']  # APIKEY
+AT_USERNAME = environ('AT_USERNAME')   # username in Africastalking app
+AT_APIKEY = environ('AT_APIKEY')  # APIKEY
 
 # CORS
-CORS_ALLOWED_ORIGINS = environ['CORS_ALLOWED_ORIGINS'].split(',')
+CORS_ALLOWED_ORIGINS = environ('CORS_ALLOWED_ORIGINS').split(',')
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = environ['CORS_ALLOWED_ORIGINS'].split(',')
+CSRF_TRUSTED_ORIGINS = environ('CORS_ALLOWED_ORIGINS').split(',')

@@ -1,0 +1,55 @@
+name: m-commerce
+services:
+  frontend:
+    image: hawkinswinja/m-commerce-frontend:v1
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: "unless-stopped"
+  backend: 
+    image: hawkinswinja/m-commerce-backend:v1
+    expose:
+      - "8000"
+    restart: "unless-stopped"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - migrations
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://backend:8000/user/isauthenticated/"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+  migrations:
+    image: hawkinswinja/m-commerce-backend:v1
+    command: "python manage.py migrate"
+    env_file:
+      - ./backend/.env
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:alpine3.19
+    expose:
+    - 5432
+    restart: "unless-stopped"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes: 
+  db:
+
