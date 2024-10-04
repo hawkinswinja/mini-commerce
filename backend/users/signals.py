@@ -5,7 +5,7 @@ from .models import Customer
 
 @receiver(post_save, sender=User)
 def create_customer_on_signup(sender, instance, created, **kwargs):
-    print("User created signal")
+    # print("User created signal")
     if created:
         Customer.objects.create(user=instance, name=instance.email)
         

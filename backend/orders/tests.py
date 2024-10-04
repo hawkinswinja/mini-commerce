@@ -32,7 +32,7 @@ class OrderViewSetTestCase(TestCase):
     def test_create_order(self):
         # Simulate an authenticated user creating an order
         data = {'product': 'Laptop', 'total': 1500.00}
-        response = self.client.post('/api/orders/', data)
+        response = self.client.post('/orders/', data)
         # Ensure the order is created successfully
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         

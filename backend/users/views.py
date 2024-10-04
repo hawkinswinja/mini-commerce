@@ -16,7 +16,7 @@ def get_csrf(request):
     return JsonResponse({'csrftoken': get_token(request)})
 
 def check_authentication(request):
-    print(request.user.is_authenticated)
+    # print(request.user.is_authenticated)
     return JsonResponse({'authenticated': request.user.is_authenticated})
 
 
