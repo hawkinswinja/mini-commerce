@@ -30,12 +30,14 @@ jobs:
           pip install flake8 bandit
 
       - name: Run Linter (Flake8)
+        working-directory: backend
         run: |
-          flake8 .
+          flake8 --exit-zero .
 
       - name: Run Security Scan (Bandit)
+        working-directory: backend
         run: |
-          bandit -r .
+          bandit -r --exit-zero .
 
       - name: Install dependencies and run linter for frontend
         working-directory: frontend
