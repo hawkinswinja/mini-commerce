@@ -89,10 +89,15 @@ WSGI_APPLICATION = 'minicommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  
+        'NAME': environ.get('POSTGRES_DB', 'mydatabase'), 
+        'USER': environ.get('POSTGRES_USER', 'myuser'),  
+        'PASSWORD': environ.get('POSTGRES_PASSWORD', 'mypassword'),
+        'HOST': environ.get('POSTGRES_HOST', 'localhost'),
+        'PORT': environ.get('POSTGRES_PORT', '5432'),
     }
 }
+
 
 
 # Password validation
