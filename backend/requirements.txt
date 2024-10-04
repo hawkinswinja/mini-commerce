@@ -15,6 +15,7 @@ django-cors-headers==4.4.0
 django-rest-framework==0.1.0
 djangorestframework==3.15.2
 filelock==3.16.1
+gunicorn==23.0.0
 idna==3.10
 josepy==1.14.0
 mozilla-django-oidc==4.0.1

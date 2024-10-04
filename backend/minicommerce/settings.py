@@ -30,8 +30,6 @@ SECRET_KEY = environ.get('SECRET_KEY')
 DEBUG = environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS', '').split(',')
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'orders',
     'users',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -166,10 +165,6 @@ AT_USERNAME = environ['AT_USERNAME']   # username in Africastalking app
 AT_APIKEY = environ['AT_APIKEY']  # APIKEY
 
 # CORS
-CORS_ALLOWED_ORIGINS = environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOWED_ORIGINS = environ['CORS_ALLOWED_ORIGINS'].split(',')
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
-# CSRF_COOKIE_SAMESITE = 'Lax'
-# CSRF_USE_SESSIONS = True
-# SESSION_COOKIE_SAMESITE = 'Lax'
-# SESSION_COOKIE_HTTP_ONLY = False
+CSRF_TRUSTED_ORIGINS = environ['CORS_ALLOWED_ORIGINS'].split(',')

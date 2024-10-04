@@ -10,7 +10,5 @@ media
 db.sqlite3
 
 # VS Code
-.vscode/
-minicommerce-auth.json
-test.html
+
 *.coverage

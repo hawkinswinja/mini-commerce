@@ -14,9 +14,9 @@ This project aims to build a simple e-commerce application using Django Rest Fra
     ```sh
     git clone https://github.com/hawkinswinja/mini-commerce.git
     ```
-2. Navigate to the project directory:
+2. Navigate to the backend directory:
     ```sh
-    cd mini-commerce
+    cd mini-commerce/backend
     ```
 3. Create and activate a virtual environment:
     ```sh
