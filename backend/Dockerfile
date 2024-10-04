@@ -4,8 +4,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 
 FROM python:alpine3.20
-LABEL "Author"="Gilbert Winja"
-LABEL "Description"="Dockerfile for Minicommerce backend"
+LABEL "author"="Gilbert Winja"
+LABEL "description"="Dockerfile for Minicommerce backend"
 USER 1234
 COPY --from=base /usr/local/lib/python3.*/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=base /usr/local/bin /usr/local/bin
