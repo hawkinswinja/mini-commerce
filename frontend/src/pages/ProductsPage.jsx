@@ -57,11 +57,10 @@ const ProductPage = () => {
       );
 
       if (response.status === 201) {
-        console.log(response.data);
+        setShowCart(false); // Close the cart modal
         alert('Order placed successfully!');
         setCookie('cart', JSON.stringify([])); // Clear cart after successful order
         setCart([]); // Clear cart in state
-        setShowCart(false); // Close the cart modal
         window.location.href = '/orders'; // Redirect to orders page
       } else {
         const errorData = await response.json();

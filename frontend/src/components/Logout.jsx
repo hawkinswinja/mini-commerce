@@ -21,7 +21,8 @@ export const logout = async (navigate) => {
       navigate('/login');
     }
   } catch (error) {
-    console.error('Logout failed:', error);
+    alert('Logout failed', error);
+    // console.error('Logout failed:', error);
   }
 };
 //     }

@@ -21,7 +21,8 @@ const OrdersPage = () => {
       setOrders(response.data.results);
       // console.log('Orders:', orders)
     } else {
-      console.error('Failed to fetch orders');
+      alert('Failed to fetch orders');
+      console.error('Failed to fetch orders', response);
     }
     setLoading(false);
   };

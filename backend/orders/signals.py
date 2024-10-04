@@ -5,7 +5,6 @@ from .sms import send_sms
 
 @receiver(post_save, sender=Order)
 def send_sms_for_order_created(sender, instance, created, **kwargs):
-    print("Order created signal")
     if created:
         # recipient = instance.phone
         recipient = '+254722123123'

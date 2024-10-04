@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+
 
 export const useAuth = () => { 
-    const [isAuth, setIsAuth] = useState(null);
-    const session = Cookies.get('sessionid');
-    console.log('session id: ', session);
-  
+    const [isAuth, setIsAuth] = useState(null);  
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -18,7 +15,7 @@ export const useAuth = () => {
                     }
                 );
                 const auth = response.data.authenticated;
-                console.log('auth', auth);
+                // console.log('auth', auth);
                 setIsAuth(auth);
                 // console.log(auth);
             } catch (error) {
@@ -34,7 +31,6 @@ export const useAuth = () => {
 
 const PrivateRoute = ({ element: Element }) => {
     const isAuth = useAuth();
-    // console.log('isAuth', isAuth);
     if (isAuth === null)
         return null;
     return isAuth ? Element : <Navigate to="/login" />;
