@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import { getCookie } from '../utils';
 import Cookies from 'js-cookie';
@@ -18,7 +19,7 @@ export const logout = async (navigate) => {
       Cookies.remove('sessionid');
 
       // Redirect to login page
-      navigate('/login');
+      navigate('/');
     }
   } catch (error) {
     alert('Logout failed', error);

@@ -1,11 +1,12 @@
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logout } from './Logout';
 
 const Layout = ({ children }) => {
   const navigate = useNavigate();
 
-  // Check if the current path is not '/login'
-  const shouldShowNav = window.location.pathname !== '/login';
+  // Check if the current path is not '/'
+  const shouldShowNav = window.location.pathname !== '/';
 
   // Handle Logout click
   const handleLogoutClick = (e) => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
@@ -9,7 +10,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/products"  element={<PrivateRoute element={<Layout><ProductsPage /></Layout>} />} />
         <Route path="/orders"  element={<PrivateRoute element={<Layout><OrdersPage /></Layout>} />} />
       </Routes>
