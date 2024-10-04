@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const useAuth = () => { 
+export const useAuth = () => { 
     const [isAuth, setIsAuth] = useState(null);
     const session = Cookies.get('sessionid');
     console.log('session id: ', session);

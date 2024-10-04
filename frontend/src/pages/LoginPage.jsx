@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../components/PrivateRoute';
 import { getCookie, setCSRF } from '../utils';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
+  if (useAuth()) {
+    window.location.href = '/products';
+  }
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
