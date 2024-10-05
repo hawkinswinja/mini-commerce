@@ -67,6 +67,7 @@ jobs:
       - name: Run tests and generate coverage report
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
           AT_USERNAME: ${{ secrets.AT_USERNAME }}
           AT_APIKEY: ${{ secrets.AT_APIKEY }}
           OIDC_RP_CLIENT_ID: ${{ secrets.OIDC_RP_CLIENT_ID }}
@@ -80,6 +81,8 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          BACKEND_IMAGE_TAG: ${{ secrets.BACKEND_IMAGE_TAG }}
+          FRONTEND_IMAGE_TAG: ${{ secrets.FRONTEND_IMAGE_TAG }}
         run: |
           printenv
           docker compose -f docker-compose-test.yaml run --rm backend coverage run manage.py test
