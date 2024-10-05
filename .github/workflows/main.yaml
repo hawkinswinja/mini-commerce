@@ -57,15 +57,43 @@ jobs:
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres:alpine3.19
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_USER: testuser
+          POSTGRES_DB: testdatabase
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready -U testuser -d testdatabase
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
 
-      - name: set up docker and docker compose
-        uses: docker/setup-buildx-action@v1
+      # - name: Run Migrations
+      #   working-directory: backend
+      #   run: |
+      #     python manage.py migrate
 
-      - name: Run tests and generate coverage report
-        timeout-minutes: 10
+      - name: Run Tests with Coverage
+        working-directory: backend
+        run: |
+          coverage run manage.py test
+          coverage report
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
@@ -79,13 +107,8 @@ jobs:
           OIDC_OP_JWKS_ENDPOINT: ${{ secrets.OIDC_OP_JWKS_ENDPOINT }}
           LOGIN_REDIRECT_URL: ${{ secrets.LOGIN_REDIRECT_URL }}
           CORS_ALLOWED_ORIGINS: ${{ secrets.CORS_ALLOWED_ORIGINS }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          BACKEND_IMAGE_TAG: ${{ secrets.BACKEND_IMAGE_TAG }}
-          FRONTEND_IMAGE_TAG: ${{ secrets.FRONTEND_IMAGE_TAG }}
-        run: |
-          printenv
-          docker compose -f docker-compose-test.yaml run --rm backend coverage run manage.py test
-          docker compose -f docker-compose-test.yaml run --rm backend coverage report
-          docker compose -f docker-compose-test.yaml down
+          POSTGRES_USER: testuser
+          POSTGRES_DB: testdatabase
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_HOST: postgres        
+          
