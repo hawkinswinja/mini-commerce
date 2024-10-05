@@ -65,6 +65,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Run tests and generate coverage report
+        timeout-minutes: 10
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
