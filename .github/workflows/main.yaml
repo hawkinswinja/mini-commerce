@@ -85,16 +85,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      # - name: Run Migrations
-      #   working-directory: backend
-      #   run: |
-      #     python manage.py migrate
-
       - name: Run Tests with Coverage
         working-directory: backend
-        run: |
-          coverage run manage.py test
-          coverage report
+        run: coverage run manage.py test
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
@@ -111,5 +104,9 @@ jobs:
           POSTGRES_USER: testuser
           POSTGRES_DB: testdatabase
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_HOST: localhost        
+          POSTGRES_HOST: localhost 
+          
+      - name: Coverage report
+        working-directory: backend
+        run: coverage report
           
