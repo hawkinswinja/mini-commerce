@@ -65,6 +65,8 @@ jobs:
       #   uses: docker/setup-buildx-action@v1
 
       - name: generate env file
+        env:
+          SECRET_ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
-          echo ${{ secrets.ENV_FILE }} | base64 -d > .env
+          echo SECRET_ENV_FILE | base64 -d > .env
           cat .env
