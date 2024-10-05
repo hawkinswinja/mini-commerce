@@ -61,14 +61,15 @@ jobs:
       postgres:
         # Docker Hub image
         image: postgres:alpine3.19
-        # Provide the password for postgres
+        ports:
+          - 5432:5432
         env:
           POSTGRES_PASSWORD: testpassword
           POSTGRES_USER: testuser
           POSTGRES_DB: testdatabase
         # Set health checks to wait until postgres has started
         options: >-
-          --health-cmd pg_isready -U testuser -d testdatabase
+          --health-cmd pg_isready -u testuser -d testdatabase
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -110,5 +111,5 @@ jobs:
           POSTGRES_USER: testuser
           POSTGRES_DB: testdatabase
           POSTGRES_PASSWORD: testpassword
-          POSTGRES_HOST: postgres        
+          POSTGRES_HOST: localhost        
           
