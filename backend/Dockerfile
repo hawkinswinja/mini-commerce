@@ -3,7 +3,8 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt --no-cache-dir
 
-FROM python:alpine3.20
+
+FROM python:alpine3.20 AS final
 LABEL "author"="Gilbert Winja"
 LABEL "description"="Dockerfile for Minicommerce backend"
 USER 1234
