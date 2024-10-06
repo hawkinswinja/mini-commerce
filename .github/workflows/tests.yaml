@@ -34,12 +34,12 @@ jobs:
       - name: Run Linter (Flake8)
         working-directory: backend
         run: |
-          flake8 --exit-zero .
+          flake8 --ignore=E501,F401 minicommerce orders users
 
       - name: Run Security Scan (Bandit)
         working-directory: backend
         run: |
-          bandit -r --exit-zero .
+          bandit -r -x tests.py users orders
 
       - name: Install dependencies and run linter for frontend
         working-directory: frontend
