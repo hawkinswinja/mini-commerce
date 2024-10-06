@@ -50,7 +50,7 @@ jobs:
         if: steps.changed-files.outputs.any_modified == 'true'
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: $DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}
+          image-ref: '${{ secrets.DOCKER_USERNAME }}/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}'
           format: 'table'
           ignore-unfixed: true
           vuln-type: 'os,library'
