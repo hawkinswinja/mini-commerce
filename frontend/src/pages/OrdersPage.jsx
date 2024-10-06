@@ -18,8 +18,8 @@ const OrdersPage = () => {
     );
     
     if (response.status === 200) {
-      // console.log(response.data.results);
-      setOrders(response.data.results);
+      // console.log(response.data); # update to response.data.results when using pagination
+      setOrders(response.data);
       // console.log('Orders:', orders)
     } else {
       alert('Failed to fetch orders');
