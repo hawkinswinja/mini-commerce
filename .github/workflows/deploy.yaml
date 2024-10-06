@@ -44,13 +44,13 @@ jobs:
         if: steps.changed-files.outputs.any_modified == 'true'
         working-directory: ${{ matrix.service }}
         run: |
-          docker build -t '$DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}' .
+          docker build -t $DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }} .
 
       - name: Run Trivy vulnerability scanner
         if: steps.changed-files.outputs.any_modified == 'true'
         uses: aquasecurity/trivy-action@0.20.0
         with:
-          image-ref: '$DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}'
+          image-ref: $DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}
           format: 'sarif'
           output: 'trivy-results.sarif'
   
