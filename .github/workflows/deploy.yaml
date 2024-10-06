@@ -51,14 +51,10 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: $DOCKER_USERNAME/m-commerce-${{ matrix.service }}:${{ steps.short-sha.outputs.sha }}
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-  
-      - name: Upload Trivy scan results to GitHub Security tab
-        if: steps.changed-files.outputs.any_modified == 'true'
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
+          format: 'table'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
         
       - name: Login to Docker Hub
         if: steps.changed-files.outputs.any_modified == 'true'
