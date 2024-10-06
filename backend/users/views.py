@@ -11,19 +11,21 @@ from .serializers import LoginSerializer
 
 csrf_protect_method = method_decorator(csrf_protect)
 
+
 @ensure_csrf_cookie
 def get_csrf(request):
     return JsonResponse({'csrftoken': get_token(request)})
+
 
 def check_authentication(request):
     # print(request.user.is_authenticated)
     return JsonResponse({'authenticated': request.user.is_authenticated})
 
 
-
 class LoginView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = ()
+
     @csrf_protect_method
     def post(self, request):
         serializer = LoginSerializer(data=request.data)

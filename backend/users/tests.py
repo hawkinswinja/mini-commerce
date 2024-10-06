@@ -7,6 +7,7 @@ from .models import Customer
 
 User = get_user_model()
 
+
 class OIDCAuthTests(TestCase):
 
     def test_oidc_login_view(self):
@@ -19,11 +20,12 @@ class OIDCAuthTests(TestCase):
         # Check that the URL points to the OIDC provider login
         self.assertIn('scope=openid', response['Location'])
 
+
 class CustomerCreationTests(TestCase):
     """
     Test that a Customer object is created automatically when a User object is created.
     """
-    
+
     def test_create_customer_on_user_signup(self):
         # Create a user
         user = User.objects.create_user(username='testuser', email='testuser@example.com', password='testpass')
@@ -32,12 +34,14 @@ class CustomerCreationTests(TestCase):
         customer = Customer.objects.get(user=user)
         self.assertEqual(customer.name, 'testuser@example.com')
 
+
 # Test CSRF token retrieval
 class CSRFTests(TestCase):
     def test_get_csrf_token(self):
         response = self.client.get(reverse('get_csrf'))
         self.assertEqual(response.status_code, 200)
         self.assertIn('csrftoken', response.json())
+
 
 # Test authentication check
 class AuthenticationTests(TestCase):
@@ -53,6 +57,7 @@ class AuthenticationTests(TestCase):
         response = self.client.get(reverse('is_authenticated'))
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.json()['authenticated'])
+
 
 # Test login functionality
 class LoginViewTests(APITestCase):

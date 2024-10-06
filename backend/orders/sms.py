@@ -21,6 +21,7 @@ class SMS:
             print(f"Order message sent successful with status: {response}")
             # return response
         except Exception as e:
-            print (str(e))
+            print(str(e))
+
 
 send_sms = SMS()

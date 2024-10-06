@@ -11,4 +11,3 @@ class OrderSerializer(serializers.ModelSerializer):
             'created_at': {'read_only': True},
             'customer': {'read_only': True}
         }
-
