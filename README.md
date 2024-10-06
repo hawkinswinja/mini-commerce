@@ -1,6 +1,6 @@
-# Project Name
+# Minicommerce 
 
-This project is a full-stack application comprising a backend (e.g., Django, Node.js) and a frontend (e.g., React). Docker Compose is used to orchestrate all the services, including the backend, frontend, database, and any other dependencies.
+This project is a full-stack application built on Django Rest Framework for backend, React for frontend amd Postgresql for backend. Docker Compose is used to orchestrate all the services, including the backend, frontend, database, and watchtower.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -33,7 +33,7 @@ Before you begin, make sure you have the following installed:
    git clone https://github.com/hawkinswinja/minicommerce.git
    cd minicommerce
    ```
-2. Create a `.env` file in the root directory and configure the necessary environment variables. You can use the provided `env.template` as a reference.
+2. Create a `.env` file in the root directory and configure the necessary environment variables. You can use the provided [env.template](./backend/env.template) as a reference.
 
 
 ## Starting the Services
@@ -42,7 +42,7 @@ To start the services, run the following command:
 ```bash
    docker compose up
 ```
-This will start all the services defined in the `docker-compose.yml` file.
+This will start all the services defined in the [docker compose file](./docker-compose.yaml) file.
 
 ## Stopping the Services
 
