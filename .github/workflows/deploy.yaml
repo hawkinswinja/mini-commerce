@@ -12,6 +12,8 @@ on:
 jobs:
   tests:
     uses: ./.github/workflows/tests.yaml
+    secrets: inherit
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -21,7 +23,6 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
       
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
