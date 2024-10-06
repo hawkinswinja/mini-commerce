@@ -1,6 +1,6 @@
 FROM python:alpine3.20 AS base
 WORKDIR /app
-COPY requirements.txt .
+COPY requirements.txt /app/
 RUN pip install -r requirements.txt --no-cache-dir
 
 FROM python:alpine3.20
