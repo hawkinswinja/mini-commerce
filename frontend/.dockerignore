@@ -3,7 +3,7 @@ Dockerfile
 .gitignore
 .env
 *env
-README.md
+*md
 node_modules
 dist
 *.config.js
