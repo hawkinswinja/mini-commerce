@@ -1,4 +1,4 @@
-# Minicommerce 
+# A Sample Minicommerce App using React, Django Rest Framework for Backend, React and OpenID Connect for Authentication
 
 This project is a full-stack application built on Django Rest Framework for backend, React for frontend amd Postgresql for backend. Docker Compose is used to orchestrate all the services, including the backend, frontend, database, and watchtower.
 
@@ -19,6 +19,7 @@ This repository uses **Docker Compose** to manage multiple services in a contain
 - **Frontend**: User interface of the application.
 - **Database**: Stores application data (e.g., PostgreSQL).
 - **Redis** (optional): Caching layer.
+- **Watchtower** (optional): Docker continuous Deployment
 
 ## Prerequisites
 
