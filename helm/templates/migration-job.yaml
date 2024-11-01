@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: {{ include "..fullname" . }}-migration
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+    app: {{ include "..fullname" . }}-migration
+  annotations:
+    "helm.sh/hook": post-install
+    # "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - python
+        - manage.py
+        - migrate
+        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+        name: minicommerce
+        env:
+        - name: POSTGRES_USER
+          value: {{ .Values.backend.database.POSTGRES_USER | quote }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.backend.database.POSTGRES_PASSWORD | quote }}
+        - name: POSTGRES_DB
+          value: {{ .Values.backend.database.POSTGRES_DB | quote }}
+        - name: POSTGRES_HOST
+        {{- if .Values.backend.database.POSTGRES_HOST }}
+          value: {{ .Values.backend.database.POSTGRES_HOST | quote }}
+        {{- else }}
+          value: {{ .Release.Name }}-postgresql
+        {{- end }}
+        {{- toYaml .Values.backend.env | nindent 8 }}
+        resources:
+          {{- toYaml .Values.backend.resources | nindent 10 }}
+      restartPolicy: Never
+status: {}

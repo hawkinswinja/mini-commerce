@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "..fullname" . }}-backend
+  labels:
+    {{- include "..labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.backend.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "..selectorLabels" . | nindent 6 }}
+      app: {{ include "..fullname" . }}-backend
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "..selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        app: {{ include "..fullname" .  }}-backend
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-backend
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy | default "IfNotPresent" }}
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.backend.database.POSTGRES_USER | quote }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.backend.database.POSTGRES_PASSWORD | quote }}
+            - name: POSTGRES_DB
+              value: {{ .Values.backend.database.POSTGRES_DB | quote }}
+            - name: POSTGRES_HOST
+            {{- if .Values.backend.database.POSTGRES_HOST }}
+              value: {{ .Values.backend.database.POSTGRES_HOST | quote }}
+            {{- else }}
+              value: {{ .Release.Name }}-postgresql
+            {{- end }}
+           {{- toYaml .Values.backend.env | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.backend.service.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.backend.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.backend.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}
