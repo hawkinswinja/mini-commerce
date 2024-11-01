@@ -85,17 +85,17 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
-  watchtower:
-    image: containrrr/watchtower
-    command: --interval 30
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      WATCHTOWER_CLEANUP: true
-      WATCHTOWER_ROLLING_RESTART: true 
-    restart: "unless-stopped"
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   command: --interval 30
+  #   labels:
+  #     - "com.centurylinklabs.watchtower.enable=false"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     WATCHTOWER_CLEANUP: true
+  #     WATCHTOWER_ROLLING_RESTART: true 
+  #   restart: "unless-stopped"
 volumes: 
   db:
 

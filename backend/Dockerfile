@@ -13,4 +13,4 @@ COPY --from=base /usr/local/bin /usr/local/bin
 EXPOSE 8000
 WORKDIR /app
 COPY . .
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "-w", "4", "minicommerce.wsgi"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "-w", "4", "--log-level", "debug", "--access-logfile", "-", "minicommerce.wsgi"]
