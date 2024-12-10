@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -33,7 +34,7 @@ class OrderViewSetTestCase(TestCase):
     def test_create_order(self):
         # Simulate an authenticated user creating an order
         data = {'product': 'Laptop', 'total': 1500.00}
-        response = self.client.post('/orders/', data)
+        response = self.client.post(reverse('orders'), data)
         # Ensure the order is created successfully
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
