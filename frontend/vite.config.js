@@ -8,7 +8,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
     '/api': {
-        target: 'http://127.0.0.1:8000',
+        // target: process.env.VITE_BACKEND_API_URL,
+        target: 'http://172.18.0.5:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

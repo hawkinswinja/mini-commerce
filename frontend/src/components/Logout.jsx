@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 export const logout = async (navigate) => {
   try {
     // Make POST request to logout endpoint
-    const response = await axios.post('/api/api-auth/logout/', {}, {
+    const response = await axios.post('/api/auth/logout/', {}, {
       headers: {
         'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
       },
