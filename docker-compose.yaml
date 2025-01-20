@@ -19,7 +19,7 @@ services:
       - ./backend:/app
     environment:
       - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=False
+      - DEBUG=${DEBUG}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - AT_USERNAME=${AT_USERNAME}
       - AT_APIKEY=${AT_APIKEY}
@@ -96,6 +96,7 @@ services:
   #     WATCHTOWER_CLEANUP: true
   #     WATCHTOWER_ROLLING_RESTART: true 
   #   restart: "unless-stopped"
+
 volumes: 
   db:
 
