@@ -10,7 +10,8 @@ on:
 jobs:
   scan_and_lint:
     name: Scan & Lint files
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    # runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
