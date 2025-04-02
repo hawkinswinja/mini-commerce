@@ -6,4 +6,3 @@ Dockerfile
 *md
 node_modules
 dist
-*.config.js

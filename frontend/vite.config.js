@@ -6,7 +6,7 @@ dotenv.config()
 
 const api = process.env.VITE_APP_API_URL
 
-// console.log('REACT_BACKEND_API_URL: ', api)
+console.log('BACKEND_API_URL: ', api)
 
 // https://vitejs.dev/config/
 export default defineConfig({
