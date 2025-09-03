@@ -108,4 +108,6 @@ We welcome contributions! Please follow these steps to contribute:
 5. Open a pull request.
 
 Thank you for contributing!
+## Deployment
+[![Build and Push Docker Images](https://github.com/hawkinswinja/mini-commerce/actions/workflows/deploy.yaml/badge.svg)](https://github.com/hawkinswinja/mini-commerce/actions/workflows/deploy.yaml)
 
