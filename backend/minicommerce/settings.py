@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'orders',
     'users',
     'corsheaders',
+    'minicommerce.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -185,6 +186,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': False,
+        },
+        "minicommerce": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
         },
     }
 }
