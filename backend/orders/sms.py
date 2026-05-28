@@ -1,5 +1,8 @@
+import logging
 import africastalking
 from minicommerce.settings import AT_USERNAME, AT_APIKEY
+
+logger = logging.getLogger(__name__)
 
 
 class SMS:
@@ -14,14 +17,15 @@ class SMS:
         # Get the SMS service
         self.sms = africastalking.SMS
 
-    def send(self, recipients: list, message: str) -> str:
+    def send(self, recipients: list, message: str) -> str | None:
         try:
             # send message
             response = self.sms.send(message, recipients)['SMSMessageData']['Recipients'][0]['status']
-            print(f"Order message sent successful with status: {response}")
-            # return response
+            logger.info('Order message sent successfully', extra={'status': response, 'recipients': recipients})
+            return response
         except Exception as e:
-            print(str(e))
+            logger.exception('Failed to send SMS')
+            return None
 
 
 send_sms = SMS()

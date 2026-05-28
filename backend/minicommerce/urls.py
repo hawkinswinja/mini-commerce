@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from mozilla_django_oidc.views import OIDCAuthenticationCallbackView, OIDCAuthenticationRequestView
+# from mozilla_django_oidc.views import OIDCAuthenticationCallbackView, OIDCAuthenticationRequestView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('oidc/', include('mozilla_django_oidc.urls')),
+    path('', include('django_prometheus.urls')),
 ]

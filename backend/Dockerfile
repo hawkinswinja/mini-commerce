@@ -19,4 +19,4 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 EXPOSE 8000
 COPY . /app/
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "-w", "4", "--log-level", "debug", "--access-logfile", "-", "minicommerce.wsgi"]
+CMD ["gunicorn", "minicommerce.wsgi:application", "-b", "0.0.0.0:8000", "--workers", "3", "--log-level", "warning", "--access-logfile", "-", "--error-logfile", "-"]

@@ -14,10 +14,16 @@ from pathlib import Path
 from os import getenv as environ
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load .env from project BASE_DIR so env vars are available regardless of CWD
+# (useful when wrapping with opentelemetry-instrument or running from repo root)
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = BASE_DIR / '.env'
+# print(f"Loading environment variables from: {env_path}")
+load_dotenv(dotenv_path=env_path)
+# load_dotenv(dotenv_path=env_path, override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR is already defined above
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -55,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'mozilla_django_oidc.middleware.SessionRefresh',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -88,7 +96,7 @@ WSGI_APPLICATION = 'minicommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django_prometheus.db.backends.postgresql',
         'NAME': environ('POSTGRES_DB', 'mydatabase'),
         'USER': environ('POSTGRES_USER', 'myuser'),
         'PASSWORD': environ('POSTGRES_PASSWORD', 'mypassword'),
@@ -149,6 +157,36 @@ REST_FRAMEWORK = {
         'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+}
+
+# Structured logging to stdout so containers and collectors can capture logs
+import logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s %(levelname)s %(name)s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
 }
 
 

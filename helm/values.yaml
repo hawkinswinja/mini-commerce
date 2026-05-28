@@ -12,7 +12,7 @@ frontend:
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "7753bb1"
+    tag: "a046499"
   service:
     port: 80
     type: ClusterIP
@@ -46,7 +46,7 @@ backend:
     # This sets the pull policy for images.
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v2"
+    tag: "4d2dd11"
 
     # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     imagePullSecrets: []
@@ -132,7 +132,7 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: false
   # Automatically mount a ServiceAccount's API credentials?
-  automount: true
+  automount: false
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
