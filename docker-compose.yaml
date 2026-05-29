@@ -7,6 +7,8 @@ services:
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    # ports:
+    #   - 4317:4317  # OTLP gRPC receiver
     expose:
       - "4317"  # OTLP gRPC receiver (from backend)
       - "4318"  # OTLP HTTP receiver (from frontend)
@@ -14,6 +16,18 @@ services:
       # - "8888:8888"  # Prometheus metrics (self-metrics)
     environment:
       - GOGC=80
+
+  jaeger:
+    image: jaegertracing/jaeger:2.12.0
+    container_name: jaeger
+    ports:
+      - 16686:16686
+    expose:
+      - "4317"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    depends_on:
+      - otel-collector
 
   frontend:
     image: hawkinswinja/m-commerce-frontend:${FRONTEND_IMAGE_TAG}
@@ -36,9 +50,11 @@ services:
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=${DEBUG}
+      - APP_ENV=${APP_ENV}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - AT_USERNAME=${AT_USERNAME}
       - AT_APIKEY=${AT_APIKEY}
+      - GUNICORN_WORKERS=2
       - OIDC_RP_CLIENT_ID=${OIDC_RP_CLIENT_ID}
       - OIDC_RP_CLIENT_SECRET=${OIDC_RP_CLIENT_SECRET}
       - OIDC_OP_AUTHORIZATION_ENDPOINT=${OIDC_OP_AUTHORIZATION_ENDPOINT}
@@ -56,7 +72,8 @@ services:
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
       - OTEL_SERVICE_NAME=minicommerce_api
       - OTEL_TRACES_EXPORTER=otlp
-      - OTEL_METRICS_EXPORTER=none
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
     depends_on:
       - migrations
       - otel-collector
@@ -90,10 +107,6 @@ services:
 
   postgres:
     image: postgres:alpine3.19
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-    # ports:
-    #   - 8090:5432
     expose:
     - 5432
     restart: "unless-stopped"

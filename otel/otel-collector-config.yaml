@@ -1,0 +1,42 @@
+# otel-collector-config.yaml
+receivers:
+  otlp:
+    protocols:
+      grpc: 
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+      
+  # prometheus:             # collector scrapes your django /metrics endpoint
+  #   config:
+  #     scrape_configs:
+  #       - job_name: django_metrics
+  #         static_configs:
+  #           - targets: ['backend:8000']  # replace with your django service name and port
+  #         metrics_path: /metrics
+
+exporters:
+  debug:
+    verbosity: basic
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+service:
+  telemetry:
+    logs:
+      level: debug
+    metrics:
+      level: none # Turns off internal operational metrics completely
+  
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug, otlp/jaeger]
+    logs:
+      receivers: [otlp]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      exporters: [debug]
